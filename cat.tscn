@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdtf3flbinw7w"]
+
+[ext_resource type="Script" uid="uid://olr4gw1p4fd7" path="res://cat.gd" id="1_hcucf"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5u64a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcucf"]
+size = Vector2(1.04, 1)
+
+[node name="Cat" type="Node2D"]
+script = ExtResource("1_hcucf")
+
+[node name="CatSprite" type="Sprite2D" parent="."]
+modulate = Color(0.482353, 0.560784, 0.643137, 1)
+scale = Vector2(50, 50)
+texture = SubResource("CanvasTexture_5u64a")
+
+[node name="ClickArea" type="Area2D" parent="CatSprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatSprite/ClickArea"]
+position = Vector2(-0.02, -0.02)
+shape = SubResource("RectangleShape2D_hcucf")

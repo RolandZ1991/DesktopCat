@@ -1,13 +1,15 @@
 extends Node2D
+@export var cat_scene : PackedScene # 匯出變數，用於在編輯器中指定貓咪場景
 
 @onready var timer_label = $"UI/Tomato Time" # 取得 TimerLabel 節點
 @onready var start_button = $"UI/Start Btn"   # 取得 StartButton 節點
 @onready var reset_button = $"UI/Reset Btn"   # 取得 ResetButton 節點
 
-var work_time_minutes = 25 # 工作時間 (分鐘)
+var work_time_minutes = 1 # 工作時間 (分鐘)
 var break_time_minutes = 5  # 休息時間 (分鐘)  (目前暫時用不到，先設定好)
 var timer_seconds # 剩餘時間 (秒)
 var timer_running = false # 計時器是否正在運行
+
 
 func _ready():
 	timer_seconds = work_time_minutes * 60 # 初始化工作時間 (分鐘轉秒)
@@ -21,14 +23,27 @@ func _ready():
 
 func _process(delta):
 	if timer_running:
-		timer_seconds -= delta # 每一幀減少時間 (delta 是一幀的時間間隔)
+		timer_seconds -= delta
 
 		if timer_seconds <= 0:
-			timer_seconds = 0 # 防止時間變成負數
-			timer_running = false # 時間到，停止計時器
-			print("番茄鐘時間到！") # 在 console 顯示時間到的訊息 (之後可以改成更明顯的提示)
+			timer_seconds = 0
+			timer_running = false
+			print("番茄鐘時間到！")
+			spawn_cat() # 呼叫生成貓咪的函式 (下一步驟建立)
+			# 在這裡可以加入時間結束後的其他邏輯，例如播放音效、顯示提示等等
 
-		update_timer_label() # 更新 TimerLabel 顯示即時時間
+		update_timer_label()
+		
+func spawn_cat():
+	print("貓咪已生成!")
+	if cat_scene: # 檢查是否已在編輯器中指定貓咪場景
+		var cat_instance = cat_scene.instantiate() # 實例化貓咪場景 (建立貓咪場景的實例)
+		add_child(cat_instance) # 將貓咪實例加入到 Main 場景中，成為 Main 節點的子節點
+		cat_instance.position = Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y - 150) # 設定貓咪在畫面中的位置 (畫面底部中央偏上)
+	else:
+		print("貓咪場景未指定！請在 Main 節點的 Inspector 面板中指定貓咪場景 (.tscn 檔案)。")
+
+
 
 func update_timer_label():
 	var minutes = int(timer_seconds / 60) # 計算分鐘

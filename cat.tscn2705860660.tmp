@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdtf3flbinw7w"]
+
+[ext_resource type="Script" uid="uid://c58aren2ysq7r" path="res://cat.gd" id="1_hcucf"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5u64a"]
+
+[node name="Cat" type="Node2D"]
+
+[node name="CatSprite" type="Sprite2D" parent="."]
+modulate = Color(0.482353, 0.560784, 0.643137, 1)
+scale = Vector2(50, 50)
+texture = SubResource("CanvasTexture_5u64a")
+script = ExtResource("1_hcucf")
